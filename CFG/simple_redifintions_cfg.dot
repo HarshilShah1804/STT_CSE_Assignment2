@@ -1,0 +1,337 @@
+digraph CFG {
+	node [fixedsize=false fontsize=10 height=0.5 shape=box width=3]
+	B0 [label="#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 10
+int main() {
+int a = 5, b = 10, c = 0, d = 3, e = 1, f = 7;
+int g = 2, h = 9, i, j, k, l, m, n, p, q, r, s, t;
+int arr1[SIZE], arr2[SIZE], arr3[SIZE];
+// Initialize arrays"]
+	B1 [label="for(i = 0; i < SIZE; i++) {"]
+	B2 [label="arr1[i] = i * 2;
+arr2[i] = i + 5;
+arr3[i] = i * i;
+}"]
+	B3 [label="printf(\"Initial values: a=%d, b=%d, c=%d, d=%d, e=%d, f=%d, g=%d, h=%d\n\", a, b, c, d, e, f, g, h);
+// Loop 1"]
+	B4 [label="for(i = 0; i < SIZE; i++) {"]
+	B5 [label="a = a + i;
+b = b - i;
+c = a + b;
+d = c % 5;
+e = e + d;
+f = f + i * 2;
+g = g + a - b;
+h = h - c + d;"]
+	B6 [label="if(a % 2 == 0) {"]
+	B7 [label="arr1[i] = arr1[i] + a;
+}"]
+	B8 [label="else {"]
+	B9 [label="arr2[i] = arr2[i] - b;
+}
+printf(\"Loop1 i=%d -> a=%d b=%d c=%d d=%d e=%d f=%d g=%d h=%d\n\", i,a,b,c,d,e,f,g,h);
+}"]
+	B10 [label="// Loop 2: nested loop with conditions"]
+	B11 [label="for(j = 0; j < SIZE; j++) {"]
+	B12 [label="for(k = 0; k < SIZE; k++) {"]
+	B13 [label="a = a + j - k;
+b = b - j + k;
+c = c + a - b;
+d = (d + k) % 7;
+e = e + d;
+f = f - j;"]
+	B14 [label="if((a + b + c) % 3 == 0) {"]
+	B15 [label="g = g + k;
+h = h - j;
+}"]
+	B16 [label="else if((d + e + f) % 2 == 0) {"]
+	B17 [label="g = g - k;
+h = h + j;
+}
+else {"]
+	B18 [label="g = g + j - k;
+h = h + k - j;
+}
+arr3[k] = arr1[k] + arr2[k] + a - b;
+printf(\"Loop2 j=%d k=%d -> a=%d b=%d c=%d d=%d e=%d f=%d g=%d h=%d arr3[%d]=%d\n\", j,k,a,b,c,d,e,f,g,h,k,arr3[k]);
+}"]
+	B19 [label="}"]
+	B20 [label="// Loop 3: array manipulation"]
+	B21 [label="for(l = 0; l < SIZE; l++) {"]
+	B22 [label="arr1[l] = arr1[l] + a - b + c;
+arr2[l] = arr2[l] - c + d;
+arr3[l] = arr3[l] + e - f;
+a = a + arr1[l];
+b = b - arr2[l];
+c = c + arr3[l];"]
+	B23 [label="if(a % 2 == 0) {"]
+	B24 [label="d = d + l;
+}"]
+	B25 [label="else {"]
+	B26 [label="e = e - l;
+}"]
+	B27 [label="if(b % 3 == 0) {"]
+	B28 [label="f = f + l;
+}"]
+	B29 [label="else {"]
+	B30 [label="g = g - l;
+}
+printf(\"Loop3 l=%d -> a=%d b=%d c=%d d=%d e=%d f=%d g=%d\n\", l,a,b,c,d,e,f,g);
+}"]
+	B31 [label="// Conditional block"]
+	B32 [label="if(a % 2 == 0 && b % 3 == 0) {"]
+	B33 [label="d = a + b + c;
+e = d / 2;
+f = d - e;
+g = e + f;
+h = g - d;
+}"]
+	B34 [label="else if(a % 3 == 0 || b % 2 == 0) {"]
+	B35 [label="d = a * b;
+e = d % 7;
+f = e + c;
+g = f - a;
+h = g + b;
+}
+else {"]
+	B36 [label="d = a - b;
+e = d + f;
+f = a + b + c;
+g = f - e;
+h = g + d;
+}
+printf(\"After conditional -> a=%d b=%d c=%d d=%d e=%d f=%d g=%d h=%d\n\", a,b,c,d,e,f,g,h);
+// Loop4: complex nested conditionals"]
+	B37 [label="for(m = 0; m < SIZE; m++) {"]
+	B38 [label="for(n = 0; n < SIZE; n++) {"]
+	B39 [label="a = a + m - n;
+b = b - m + n;
+c = c + a - b;"]
+	B40 [label="if(a % 2 == 0) {"]
+	B41 [label="d = d + m;"]
+	B42 [label="if(d % 3 == 0) {"]
+	B43 [label="e = e + n;
+f = f - n;
+}"]
+	B44 [label="else {"]
+	B45 [label="e = e - n;
+f = f + n;
+}
+}"]
+	B46 [label="else {"]
+	B47 [label="d = d - m;"]
+	B48 [label="if(d % 2 == 0) {"]
+	B49 [label="e = e - n;
+f = f + n;
+}"]
+	B50 [label="else {"]
+	B51 [label="e = e + n;
+f = f - n;
+}
+}
+arr1[n] = arr1[n] + a - b + c;
+arr2[n] = arr2[n] + b - a + d;
+arr3[n] = arr3[n] + c - d + e;
+printf(\"Loop4 m=%d n=%d -> a=%d b=%d c=%d d=%d e=%d f=%d arr1[%d]=%d arr2[%d]=%d arr3[%d]=%d\n\",
+m,n,a,b,c,d,e,f,n,arr1[n],n,arr2[n],n,arr3[n]);
+}"]
+	B52 [label="}"]
+	B53 [label="// Loop5: triple nested"]
+	B54 [label="for(p = 0; p < SIZE; p++) {"]
+	B55 [label="for(q = 0; q < SIZE; q++) {"]
+	B56 [label="for(r = 0; r < SIZE; r++) {"]
+	B57 [label="a = a + p - q + r;
+b = b - p + q - r;
+c = c + a - b;
+d = (d + p + q + r) % 10;
+e = e + c - d;
+f = f - b + a;
+g = g + e - f;
+h = h + d - e;
+arr1[r] = arr1[r] + a - b;
+arr2[r] = arr2[r] - c + d;
+arr3[r] = arr3[r] + e - f;
+printf(\"Loop5 p=%d q=%d r=%d -> a=%d b=%d c=%d d=%d e=%d f=%d g=%d h=%d\n\", p,q,r,a,b,c,d,e,f,g,h);
+}"]
+	B58 [label="}"]
+	B59 [label="}"]
+	B60 [label="// Extra loops to extend code"]
+	B61 [label="for(s = 0; s < SIZE; s++) {"]
+	B62 [label="a = a + s;
+b = b - s;
+c = c + s;
+d = d + a - b;
+e = e - c + d;
+f = f + e - d;
+g = g - a + b;
+h = h + c - e;"]
+	B63 [label="if(a % 2 == 0) {"]
+	B64 [label="f = f + s;
+}"]
+	B65 [label="else {"]
+	B66 [label="g = g - s;
+}"]
+	B67 [label="if(b % 3 == 0) {"]
+	B68 [label="e = e + s;
+}"]
+	B69 [label="else {"]
+	B70 [label="d = d - s;
+}
+printf(\"Extra loop1 s=%d -> a=%d b=%d c=%d d=%d e=%d f=%d g=%d h=%d\n\", s,a,b,c,d,e,f,g,h);
+}"]
+	B71 [label="for(t = 0; t < SIZE; t++) {"]
+	B72 [label="a = a - t;
+b = b + t;
+c = c - t;
+d = d + t;
+e = e - t;
+f = f + t;
+g = g - t;
+h = h + t;
+arr1[t] = arr1[t] + a - b;
+arr2[t] = arr2[t] + c - d;
+arr3[t] = arr3[t] - e + f;
+printf(\"Extra loop2 t=%d -> a=%d b=%d c=%d d=%d e=%d f=%d g=%d h=%d arr1[%d]=%d arr2[%d]=%d arr3[%d]=%d\n\",
+t,a,b,c,d,e,f,g,h,t,arr1[t],t,arr2[t],t,arr3[t]);
+}"]
+	B73 [label="// Final calculations
+a = a + b + c + d + e + f + g + h;
+b = a - b - c;
+c = a + b - d;
+d = (a + b + c) % 10;
+e = d * 2;
+f = e + a - b;
+g = f - c + d;
+h = g + e - f;
+printf(\"Final values -> a=%d b=%d c=%d d=%d e=%d f=%d g=%d h=%d\n\", a,b,c,d,e,f,g,h);
+// Print arrays
+printf(\"Array1: \");"]
+	B74 [label="for(i = 0; i < SIZE; i++) printf(\"%d \", arr1[i]);"]
+	B75 [label="printf(\"\nArray2: \");"]
+	B76 [label="for(i = 0; i < SIZE; i++) printf(\"%d \", arr2[i]);"]
+	B77 [label="printf(\"\nArray3: \");"]
+	B78 [label="for(i = 0; i < SIZE; i++) printf(\"%d \", arr3[i]);"]
+	B79 [label="printf(\"\n\");
+return 0;
+}"]
+	B0 -> B1 [label=""]
+	B1 -> B2 [label=T]
+	B1 -> B3 [label=""]
+	B3 -> B1 [label=""]
+	B2 -> B3 [label=""]
+	B3 -> B4 [label=""]
+	B4 -> B5 [label=T]
+	B4 -> B10 [label=""]
+	B10 -> B4 [label=""]
+	B5 -> B6 [label=""]
+	B6 -> B7 [label=T]
+	B6 -> B8 [label=F]
+	B7 -> B8 [label=""]
+	B8 -> B9 [label=""]
+	B9 -> B10 [label=""]
+	B10 -> B11 [label=""]
+	B11 -> B12 [label=T]
+	B11 -> B20 [label=""]
+	B20 -> B11 [label=""]
+	B12 -> B13 [label=T]
+	B12 -> B19 [label=""]
+	B19 -> B12 [label=""]
+	B13 -> B14 [label=""]
+	B14 -> B15 [label=T]
+	B14 -> B16 [label=F]
+	B15 -> B16 [label=""]
+	B16 -> B17 [label=""]
+	B17 -> B18 [label=""]
+	B18 -> B19 [label=""]
+	B19 -> B20 [label=""]
+	B20 -> B21 [label=""]
+	B21 -> B22 [label=T]
+	B21 -> B31 [label=""]
+	B31 -> B21 [label=""]
+	B22 -> B23 [label=""]
+	B23 -> B24 [label=T]
+	B23 -> B25 [label=F]
+	B24 -> B25 [label=""]
+	B25 -> B26 [label=""]
+	B26 -> B27 [label=""]
+	B27 -> B28 [label=T]
+	B27 -> B29 [label=F]
+	B28 -> B29 [label=""]
+	B29 -> B30 [label=""]
+	B30 -> B31 [label=""]
+	B31 -> B32 [label=""]
+	B32 -> B33 [label=T]
+	B32 -> B34 [label=F]
+	B33 -> B34 [label=""]
+	B34 -> B35 [label=""]
+	B35 -> B36 [label=""]
+	B36 -> B37 [label=""]
+	B37 -> B38 [label=T]
+	B37 -> B53 [label=""]
+	B53 -> B37 [label=""]
+	B38 -> B39 [label=T]
+	B38 -> B52 [label=""]
+	B52 -> B38 [label=""]
+	B39 -> B40 [label=""]
+	B40 -> B41 [label=T]
+	B40 -> B46 [label=F]
+	B41 -> B42 [label=""]
+	B42 -> B43 [label=T]
+	B42 -> B44 [label=F]
+	B43 -> B44 [label=""]
+	B44 -> B45 [label=""]
+	B45 -> B46 [label=""]
+	B46 -> B47 [label=""]
+	B47 -> B48 [label=""]
+	B48 -> B49 [label=T]
+	B48 -> B50 [label=F]
+	B49 -> B50 [label=""]
+	B50 -> B51 [label=""]
+	B51 -> B52 [label=""]
+	B52 -> B53 [label=""]
+	B53 -> B54 [label=""]
+	B54 -> B55 [label=T]
+	B54 -> B60 [label=""]
+	B60 -> B54 [label=""]
+	B55 -> B56 [label=T]
+	B55 -> B59 [label=""]
+	B59 -> B55 [label=""]
+	B56 -> B57 [label=T]
+	B56 -> B58 [label=""]
+	B58 -> B56 [label=""]
+	B57 -> B58 [label=""]
+	B58 -> B59 [label=""]
+	B59 -> B60 [label=""]
+	B60 -> B61 [label=""]
+	B61 -> B62 [label=T]
+	B61 -> B71 [label=""]
+	B71 -> B61 [label=""]
+	B62 -> B63 [label=""]
+	B63 -> B64 [label=T]
+	B63 -> B65 [label=F]
+	B64 -> B65 [label=""]
+	B65 -> B66 [label=""]
+	B66 -> B67 [label=""]
+	B67 -> B68 [label=T]
+	B67 -> B69 [label=F]
+	B68 -> B69 [label=""]
+	B69 -> B70 [label=""]
+	B70 -> B71 [label=""]
+	B71 -> B72 [label=T]
+	B71 -> B73 [label=""]
+	B73 -> B71 [label=""]
+	B72 -> B73 [label=""]
+	B73 -> B74 [label=""]
+	B74 -> B75 [label=T]
+	B74 -> B75 [label=""]
+	B75 -> B74 [label=""]
+	B75 -> B76 [label=""]
+	B76 -> B77 [label=T]
+	B76 -> B77 [label=""]
+	B77 -> B76 [label=""]
+	B77 -> B78 [label=""]
+	B78 -> B79 [label=T]
+	B78 -> B79 [label=""]
+	B79 -> B78 [label=""]
+}
